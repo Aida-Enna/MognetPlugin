@@ -52,8 +52,14 @@ namespace FFXIVPostParse
 
         private void CombatEnded(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            Label status = (Label)pluginControl.Controls.Find("combatStatus", true)[0];
-            status.Text = "Log sent to your Discord channel. Waiting for the next one...";
+            if (pluginControl.IsEnabled)
+            {
+                pluginControl.CombatStatusText("Log sent to your Discord channel. Waiting for the next one...");
+            }
+            else
+            {
+                pluginControl.CombatStatusText("Plugin disabled. No log will be sent.");
+            }
         }
     }
 }
