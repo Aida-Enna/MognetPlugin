@@ -10,14 +10,17 @@ namespace FFXIVPostParse
 {
     public class PluginLoader : IActPluginV1
     {
+        PluginMain main;
+
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
-            throw new NotImplementedException();
+            main = new PluginMain(pluginScreenSpace, pluginStatusText);
+            main.Init();
         }
 
         public void DeInitPlugin()
         {
-            throw new NotImplementedException();
+            main.DeInit();
         }
     }
 }
