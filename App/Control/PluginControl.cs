@@ -64,6 +64,12 @@ namespace FFXIVPostParse.Control
             this.rchPluginLog.Clear();
         }
 
+        private void rchPluginLog_TextChanged(object sender, EventArgs e)
+        {
+            rchPluginLog.SelectionStart = rchPluginLog.Text.Length;
+            rchPluginLog.ScrollToCaret();
+        }
+
         private void btnApplyName_Click(object sender, EventArgs e)
         {
             String playerName = txtPlayerName.Text;

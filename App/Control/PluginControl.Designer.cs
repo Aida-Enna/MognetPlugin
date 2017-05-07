@@ -126,6 +126,7 @@ namespace FFXIVPostParse.Control
             this.rchPluginLog.Size = new System.Drawing.Size(418, 177);
             this.rchPluginLog.TabIndex = 1;
             this.rchPluginLog.Text = "";
+            this.rchPluginLog.TextChanged += new System.EventHandler(this.rchPluginLog_TextChanged);
             // 
             // btnClearLog
             // 
