@@ -34,7 +34,7 @@ namespace FFXIVPostParse.Util
                 Player.overhealPercentage = ValidateAndFill(attributes, AttributeEnum.OVERHEAL_PERCENTAGE, GetCustomColumnData(combatant, "OverHealPct"));
                 Player.deaths = ValidateAndFill(attributes, AttributeEnum.DEATHS, combatant.Deaths.ToString());
                 Player.crits = ValidateAndFill(attributes, AttributeEnum.CRITS, combatant.CritHits.ToString());
-                Player.misses = ValidateAndFill(attributes, AttributeEnum.MISEES, combatant.Misses.ToString());
+                Player.misses = ValidateAndFill(attributes, AttributeEnum.MISSES, combatant.Misses.ToString());
 
                 Log.players.Add(Player);
             });

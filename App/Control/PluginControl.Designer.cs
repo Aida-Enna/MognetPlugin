@@ -168,7 +168,7 @@ namespace FFXIVPostParse.Control
             AttributeEnum.OVERHEAL_PERCENTAGE,
             AttributeEnum.DEATHS,
             AttributeEnum.CRITS,
-            AttributeEnum.MISEES});
+            AttributeEnum.MISSES});
             this.chlAttributes.SetItemChecked(4, true);
             this.chlAttributes.SetItemChecked(5, true);
             this.chlAttributes.SetItemChecked(6, true);

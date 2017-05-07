@@ -25,7 +25,7 @@ namespace FFXIVPostParse.Enum
         public static readonly AttributeEnum OVERHEAL_PERCENTAGE = new AttributeEnum(14, "Overheal Percentage");
         public static readonly AttributeEnum DEATHS = new AttributeEnum(15, "Deaths");
         public static readonly AttributeEnum CRITS = new AttributeEnum(16, "Crits");
-        public static readonly AttributeEnum MISEES = new AttributeEnum(17, "Misses");
+        public static readonly AttributeEnum MISSES = new AttributeEnum(17, "Misses");
 
         public static IEnumerable<AttributeEnum> Values
         {
@@ -48,7 +48,7 @@ namespace FFXIVPostParse.Enum
                 yield return OVERHEAL_PERCENTAGE;
                 yield return DEATHS;
                 yield return CRITS;
-                yield return MISEES;
+                yield return MISSES;
             }
         }
 
