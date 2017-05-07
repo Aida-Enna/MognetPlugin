@@ -8,23 +8,23 @@ namespace FFXIVPostParse.Model
 {
     class Log
     {
-        public String StartTime { get; set; }
-        public String Duration { get; set; }
-        public String TotalHps { get; set; }
-        public String BossName { get; set; }
-        public String MapName { get; set; }
-        public Boolean IncludeHps { get; set; }
-        public List<Player> Players { get; set; }
+        public String startTime { get; set; }
+        public String duration { get; set; }
+        public String maxHit { get; set; }
+        public String totalHealing { get; set; }
+        public String bossName { get; set; }
+        public String mapName { get; set; }
+        public List<Player> players { get; set; }
 
         public Log()
         {
-            this.StartTime = "";
-            this.Duration = "";
-            this.TotalHps = "";
-            this.BossName = "";
-            this.MapName = "";
-            this.IncludeHps = true;
-            this.Players = new List<Player>();
+            this.startTime = "";
+            this.duration = "";
+            this.maxHit = "";
+            this.totalHealing = "";
+            this.bossName = "";
+            this.mapName = "";
+            this.players = new List<Player>();
         }
     }
 }

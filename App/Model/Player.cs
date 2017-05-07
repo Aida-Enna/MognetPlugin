@@ -8,29 +8,32 @@ namespace FFXIVPostParse.Model
 {
     class Player
     {
-        public String PlayerJob { get; set; }
-        public String PlayerName { get; set; }
-        public String DamagePercentage { get; set; }
-        public String Dps { get; set; }
-        public String HealingPercentage { get; set; }
-        public String Hps { get; set; }
-        public String Deaths { get; set; }
-        public String Crits { get; set; }
-        public String Misses { get; set; }
-        public Boolean JobIconEnabled { get; set; }
+        public String playerJob { get; set; }
+        public String playerName { get; set; }
+        public String damagePercentage { get; set; }
+        public String dps { get; set; }
+        public String maxHit { get; set; }
+        public String healingPercentage { get; set; }
+        public String hps { get; set; }
+        public String maxHeal { get; set; }
+        public String overhealPercentage { get; set; }
+        public String deaths { get; set; }
+        public String crits { get; set; }
+        public String misses { get; set; }
 
         public Player()
         {
-            this.PlayerJob = "";
-            this.PlayerName = "";
-            this.DamagePercentage = "";
-            this.Dps = "";
-            this.HealingPercentage = "";
-            this.Hps = "";
-            this.Deaths = "";
-            this.Crits = "";
-            this.Misses = "";
-            this.JobIconEnabled = true;
+            this.playerName = "";
+            this.damagePercentage = "";
+            this.dps = "";
+            this.maxHit = "";
+            this.healingPercentage = "";
+            this.hps = "";
+            this.maxHeal = "";
+            this.overhealPercentage = "";
+            this.deaths = "";
+            this.crits = "";
+            this.misses = "";
         }
     }
 }
