@@ -1,35 +1,40 @@
 ﻿using Advanced_Combat_Tracker;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using FFXIVPostParse.Control;
+using FFXIVPostParse.Util;
+using FFXIVPostParse.Model;
+using System.Collections.Generic;
+using System.Web.Script.Serialization;
+using System;
+using FFXIVPostParse.Enum;
 
 namespace FFXIVPostParse
 {
     public class PluginMain
     {
-        TabPage tabPage;
-        Label label;
-        PluginControl pluginControl;
+        TabPage TabPage;
+        Label PluginStatusLabel;
+        PluginControl PluginControl;
 
         public PluginMain(TabPage pluginScreenSpace, Label pluginStatusText)
         {
-            this.tabPage = pluginScreenSpace;
-            this.label = pluginStatusText;
+            this.TabPage = pluginScreenSpace;
+            this.PluginStatusLabel = pluginStatusText;
         }
 
         public void Init()
         {
-            this.label.Text = "FFXIV Post Parse";
+            this.PluginStatusLabel.Text = "FFXIV Post Parse";
+            this.TabPage.Text = "FFXIV Post Parse";
 
-            this.pluginControl = new PluginControl();
-            this.pluginControl.Dock = DockStyle.Fill;
-            this.tabPage.Controls.Add(this.pluginControl);
+            this.PluginControl = new PluginControl();
+            this.PluginControl.Dock = DockStyle.Fill;
+            this.TabPage.Controls.Add(this.PluginControl);
 
             ActGlobals.oFormActMain.OnCombatStart += CombatStarted;
             ActGlobals.oFormActMain.OnCombatEnd += CombatEnded;
+
+            this.PluginControl.AddPluginLogText("Plugin started. Waiting for the next encounter...");
         }
 
         public void DeInit()
@@ -40,25 +45,29 @@ namespace FFXIVPostParse
 
         private void CombatStarted(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            if (pluginControl.IsEnabled)
+            if (PluginControl.IsEnabled)
             {
-                pluginControl.CombatStatusText("Fight detected! Waiting for it to end...");
-            }
-            else
-            {
-                pluginControl.CombatStatusText("Plugin disabled. No log will be sent.");
+                PluginControl.AddPluginLogText("Encounter detected! Waiting for the end...");
             }
         }
 
         private void CombatEnded(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            if (pluginControl.IsEnabled)
+            if (PluginControl.IsEnabled)
             {
-                pluginControl.CombatStatusText("Log sent to your Discord channel. Waiting for the next one...");
-            }
-            else
-            {
-                pluginControl.CombatStatusText("Plugin disabled. No log will be sent.");
+                List<AttributeEnum> attributes = PluginControl.GetCheckedAttributes();
+                if(attributes.Count == 0)
+                {
+                    PluginControl.AddPluginLogText("Log not sent. You must choose at least one attribute.");
+                }
+                else
+                {
+                    Log Log = PluginUtil.ACTEncounterToModel(encounterInfo.encounter, attributes, PluginControl.GetPlayerName());
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    String json = serializer.Serialize(Log);
+                    PluginControl.AddPluginLogText(json);
+                    PluginControl.AddPluginLogText("Log sent to your Discord channel. Waiting for the next encounter...");
+                }
             }
         }
     }
