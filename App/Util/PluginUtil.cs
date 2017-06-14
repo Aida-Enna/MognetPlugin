@@ -1,40 +1,51 @@
 ﻿using Advanced_Combat_Tracker;
-using FFXIVPostParse.Enum;
-using FFXIVPostParse.Model;
+using MognetPlugin.Enum;
+using MognetPlugin.Model;
+using MognetPlugin.Properties;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FFXIVPostParse.Util
+namespace MognetPlugin.Util
 {
     class PluginUtil
     {
-        public static Log ACTEncounterToModel(EncounterData encounter, List<AttributeEnum> attributes, String playerName)
+
+        public static Log ACTEncounterToModel(EncounterData encounter)
         {
             Log Log = new Log();
-            Log.startTime = ValidateAndFill(attributes, AttributeEnum.START_TIME, encounter.StartTime.TimeOfDay.ToString());
-            Log.duration = ValidateAndFill(attributes, AttributeEnum.DURATION, encounter.Duration.ToString());
-            Log.maxHit = ValidateAndFill(attributes, AttributeEnum.MAX_HIT_PARTY, GetMaxHit(encounter, playerName));
-            Log.totalHealing = ValidateAndFill(attributes, AttributeEnum.TOTAL_HEALING, encounter.Healed.ToString());
-            Log.bossName = ValidateAndFill(attributes, AttributeEnum.TOTAL_HEALING, encounter.GetStrongestEnemy(null));
-            Log.mapName = ValidateAndFill(attributes, AttributeEnum.MAP_NAME, encounter.ZoneName);
+            Log.successLevel = SuccessLevelEnum.GetByCode(encounter.GetEncounterSuccessLevel()).Name;
+            Log.startTime = encounter.StartTime.TimeOfDay.ToString();
+            Log.duration = encounter.Duration.ToString();
+            Log.maxHit = ValidateAndFill("MaxHitParty", encounter.GetMaxHit(false));
+            Log.totalHealing = ValidateAndFill("TotalHealing", encounter.Healed.ToString());
+            Log.targetName = encounter.GetStrongestEnemy(null);
+            Log.mapName = ValidateAndFill("MapName", encounter.ZoneName);
+            Log.sortBy = (string)PluginSettings.GetSetting("SortBy");
             encounter.GetAllies().ForEach(combatant =>
             {
                 Player Player = new Player();
-                Player.playerJob = ValidateAndFill(attributes, AttributeEnum.PLAYER_JOB, GetCustomColumnData(combatant, "Job"));
-                Player.playerName = ValidateAndFill(attributes, AttributeEnum.PLAYER_NAME, GetCharName(combatant, playerName));
-                Player.damagePercentage = ValidateAndFill(attributes, AttributeEnum.DAMAGE_PERCENTAGE, combatant.DamagePercent);
-                Player.dps = ValidateAndFill(attributes, AttributeEnum.DPS, Math.Round(combatant.EncDPS).ToString());
-                Player.maxHit = ValidateAndFill(attributes, AttributeEnum.MAX_HIT_INDIVIDUAL, combatant.GetMaxHit(true));
-                Player.healingPercentage = ValidateAndFill(attributes, AttributeEnum.HEALING_PERCENTAGE, combatant.HealedPercent);
-                Player.hps = ValidateAndFill(attributes, AttributeEnum.HPS, Math.Round(combatant.EncHPS).ToString());
-                Player.maxHeal = ValidateAndFill(attributes, AttributeEnum.MAX_HEAL, combatant.GetMaxHeal(true, false));
-                Player.overhealPercentage = ValidateAndFill(attributes, AttributeEnum.OVERHEAL_PERCENTAGE, GetCustomColumnData(combatant, "OverHealPct"));
-                Player.deaths = ValidateAndFill(attributes, AttributeEnum.DEATHS, combatant.Deaths.ToString());
-                Player.crits = ValidateAndFill(attributes, AttributeEnum.CRITS, combatant.CritHits.ToString());
-                Player.misses = ValidateAndFill(attributes, AttributeEnum.MISSES, combatant.Misses.ToString());
+                if (!IsLimitBreak(combatant.Name))
+                {
+                    Player.playerJob = GetCustomColumnData(combatant, "Job");
+                    Player.playerName = combatant.Name;
+                    Player.damagePercentage = ValidateAndFill("DamagePerc", combatant.DamagePercent);
+                    Player.dps = Math.Round(combatant.EncDPS).ToString();
+                    Player.maxHit = ValidateAndFill("MaxHitIndividual", combatant.GetMaxHit(true));
+                    Player.healingPercentage = ValidateAndFill("HealingPerc", combatant.HealedPercent);
+                    Player.hps = ValidateAndFill("HPS", Math.Round(combatant.EncHPS).ToString());
+                    Player.maxHeal = ValidateAndFill("MaxHeal", combatant.GetMaxHeal(true, false));
+                    Player.overhealPercentage = ValidateAndFill("OverHealPerc", GetCustomColumnData(combatant, "OverHealPct"));
+                    Player.deaths = ValidateAndFill("Deaths", combatant.Deaths.ToString());
+                    Player.crits = ValidateAndFill("Crits", combatant.CritHits.ToString());
+                    Player.critDmgPercentage = ValidateAndFill("CritDmgPerc", Math.Round(combatant.CritDamPerc).ToString());
+                    Player.critHealPercentage = ValidateAndFill("CritHealPerc", Math.Round(combatant.CritHealPerc).ToString());
+                    Player.misses = ValidateAndFill("Misses", combatant.Misses.ToString());
+                }
+                else
+                {
+                    Player.playerName = combatant.Name;
+                    Player.maxHit = combatant.GetMaxHit(true);
+                }
+                
 
                 Log.players.Add(Player);
             });
@@ -42,9 +53,9 @@ namespace FFXIVPostParse.Util
             return Log;
         }
 
-        private static String ValidateAndFill(List<AttributeEnum> attributes, AttributeEnum currentAttribute, String data)
+        private static String ValidateAndFill(string setting, string data)
         {
-            if (attributes.Contains(currentAttribute)) {
+            if ((bool)PluginSettings.GetSetting(setting)) {
                 return data;
             }
 
@@ -62,24 +73,9 @@ namespace FFXIVPostParse.Util
             return "";
         }
 
-        private static String GetCharName(CombatantData combatant, String playerName)
+        private static bool IsLimitBreak(string charName)
         {
-            String charName = combatant.Name;
-            if (charName.StartsWith("YOU"))
-            {
-                return charName.Replace("YOU", playerName);
-            }
-            return charName;
-        }
-
-        private static String GetMaxHit(EncounterData encounter, String playerName)
-        {
-            String maxHit = encounter.GetMaxHit(true);
-            if (maxHit.StartsWith("YOU"))
-            {
-                return maxHit.Replace("YOU", playerName);
-            }
-            return maxHit;
+            return "Limit Break".Equals(charName);
         }
     }
 }
