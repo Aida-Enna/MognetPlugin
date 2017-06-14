@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FFXIVPostParse.Model
+namespace MognetPlugin.Model
 {
     class Player
     {
@@ -19,6 +15,8 @@ namespace FFXIVPostParse.Model
         public String overhealPercentage { get; set; }
         public String deaths { get; set; }
         public String crits { get; set; }
+        public String critDmgPercentage { get; set; }
+        public String critHealPercentage { get; set; }
         public String misses { get; set; }
 
         public Player()
@@ -33,6 +31,8 @@ namespace FFXIVPostParse.Model
             this.overhealPercentage = "";
             this.deaths = "";
             this.crits = "";
+            this.critDmgPercentage = "";
+            this.critHealPercentage = "";
             this.misses = "";
         }
     }
