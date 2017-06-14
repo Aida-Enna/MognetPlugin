@@ -7,10 +7,11 @@
     <ProjectGuid>{8630D238-8BB5-4219-9C29-B32D20F06F70}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FFXIVPostParse</RootNamespace>
-    <AssemblyName>FFXIVPostParse</AssemblyName>
+    <RootNamespace>MognetPlugin</RootNamespace>
+    <AssemblyName>MognetPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,12 +53,19 @@
     <Compile Include="Control\PluginControl.Designer.cs">
       <DependentUpon>PluginControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enum\SuccessLevelEnum.cs" />
     <Compile Include="Enum\AttributeEnum.cs" />
+    <Compile Include="Http\PluginHttpClient.cs" />
+    <Compile Include="Model\DiscordChannel.cs" />
     <Compile Include="Model\Log.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="PluginMain.cs" />
-    <Compile Include="PluginLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\PluginSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>PluginSettings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Util\PluginUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +73,12 @@
       <DependentUpon>PluginControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\PluginSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>PluginSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,31 +1,31 @@
 ﻿using Advanced_Combat_Tracker;
+
 using System.Windows.Forms;
-using FFXIVPostParse.Control;
-using FFXIVPostParse.Util;
-using FFXIVPostParse.Model;
-using System.Collections.Generic;
 using System.Web.Script.Serialization;
 using System;
-using FFXIVPostParse.Enum;
+using System.Net.Http;
 
-namespace FFXIVPostParse
+using MognetPlugin.Control;
+using MognetPlugin.Util;
+using MognetPlugin.Model;
+using MognetPlugin.Properties;
+using MognetPlugin.Http;
+
+namespace MognetPlugin
 {
-    public class PluginMain
+    public class PluginMain : IActPluginV1
     {
         TabPage TabPage;
         Label PluginStatusLabel;
         PluginControl PluginControl;
 
-        public PluginMain(TabPage pluginScreenSpace, Label pluginStatusText)
+        public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
             this.TabPage = pluginScreenSpace;
             this.PluginStatusLabel = pluginStatusText;
-        }
 
-        public void Init()
-        {
-            this.PluginStatusLabel.Text = "FFXIV Post Parse";
-            this.TabPage.Text = "FFXIV Post Parse";
+            this.PluginStatusLabel.Text = "Mognet Plugin";
+            this.TabPage.Text = "Mognet Plugin";
 
             this.PluginControl = new PluginControl();
             this.PluginControl.Dock = DockStyle.Fill;
@@ -34,41 +34,61 @@ namespace FFXIVPostParse
             ActGlobals.oFormActMain.OnCombatStart += CombatStarted;
             ActGlobals.oFormActMain.OnCombatEnd += CombatEnded;
 
-            this.PluginControl.AddPluginLogText("Plugin started. Waiting for the next encounter...");
+            this.PluginControl.LogInfo("Plugin started.");
+            if (IsEnabled())
+            {
+                this.PluginControl.LogInfo("Waiting the next encounter...");
+            }
         }
 
-        public void DeInit()
+        public void DeInitPlugin()
         {
             ActGlobals.oFormActMain.OnCombatStart -= CombatStarted;
             ActGlobals.oFormActMain.OnCombatEnd -= CombatEnded;
         }
-
+        
         private void CombatStarted(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            if (PluginControl.IsEnabled)
+            if (IsEnabled())
             {
-                PluginControl.AddPluginLogText("Encounter detected! Waiting for the end...");
+                PluginControl.LogInfo("Encounter detected! Will send the parse after it finishes...");
             }
         }
 
         private void CombatEnded(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            if (PluginControl.IsEnabled)
+            if (IsEnabled())
             {
-                List<AttributeEnum> attributes = PluginControl.GetCheckedAttributes();
-                if(attributes.Count == 0)
+                try
                 {
-                    PluginControl.AddPluginLogText("Log not sent. You must choose at least one attribute.");
+                    Log Log = PluginUtil.ACTEncounterToModel(encounterInfo.encounter);
+                    JavaScriptSerializer Serializer = new JavaScriptSerializer();
+                    String Json = Serializer.Serialize(Log);
+                    PluginHttpClient Client = new PluginHttpClient();
+                    HttpResponseMessage Result = Client.PostDiscord(Json, (string)PluginSettings.GetSetting("Token"));
+                    
+                    if (Result.IsSuccessStatusCode)
+                    {
+                        PluginControl.LogInfo("Parse sent to your Discord channel.");
+                        this.PluginControl.LogInfo("Waiting the next encounter...");
+                    }
+                    else
+                    {
+                        PluginControl.LogInfo("Could not send the parse to your Discord channel. Check your token.");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Log Log = PluginUtil.ACTEncounterToModel(encounterInfo.encounter, attributes, PluginControl.GetPlayerName());
-                    JavaScriptSerializer serializer = new JavaScriptSerializer();
-                    String json = serializer.Serialize(Log);
-                    PluginControl.AddPluginLogText(json);
-                    PluginControl.AddPluginLogText("Log sent to your Discord channel. Waiting for the next encounter...");
+                    PluginControl.LogInfo("Something went wrong.");
                 }
             }
+        }
+
+        private bool IsEnabled()
+        {
+            bool enabled = (bool)PluginSettings.GetSetting("Enabled");
+            string token = (string)PluginSettings.GetSetting("Token");
+            return enabled && token != null;
         }
     }
 }
