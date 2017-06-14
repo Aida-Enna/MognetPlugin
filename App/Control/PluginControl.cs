@@ -137,6 +137,7 @@ namespace MognetPlugin.Control
                 else
                 {
                     lblGuildName.Text = "";
+                    lblChannelName.Text = "";
                     txtToken.Text = "";
                     PluginSettings.SetSetting("Token", "");
                     PluginSettings.SetSetting("GuildName", "");
