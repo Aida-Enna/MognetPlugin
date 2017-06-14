@@ -1,7 +1,7 @@
-﻿using FFXIVPostParse.Enum;
+﻿using MognetPlugin.Enum;
 using System.Windows.Forms;
 
-namespace FFXIVPostParse.Control
+namespace MognetPlugin.Control
 {
     partial class PluginControl
     {
@@ -23,15 +23,18 @@ namespace FFXIVPostParse.Control
             base.Dispose(disposing);
         }
         private GroupBox grpOptions;
-        private Label lblPlayerName;
-        private TextBox txtPlayerName;
-        private Button btnApplyName;
+        private Button btnApplyToken;
         private CheckBox chkEnabled;
         private GroupBox grpHttpLog;
         private RichTextBox rchPluginLog;
         private Button btnClearLog;
         private GroupBox grpAttributes;
         private CheckedListBox chlAttributes;
+        private Label lblToken;
+        private TextBox txtToken;
+        private ComboBox cmbSort;
+        private Label lblGuildName;
+        private Label lblSort;
 
         #region Windows Form Designer generated code
 
@@ -43,13 +46,19 @@ namespace FFXIVPostParse.Control
         {
             this.chkEnabled = new System.Windows.Forms.CheckBox();
             this.grpOptions = new System.Windows.Forms.GroupBox();
-            this.lblPlayerName = new System.Windows.Forms.Label();
-            this.txtPlayerName = new System.Windows.Forms.TextBox();
-            this.btnApplyName = new System.Windows.Forms.Button();
+            this.lblChannelName = new System.Windows.Forms.Label();
+            this.lbDiscordChannel = new System.Windows.Forms.Label();
+            this.lblDiscordGuild = new System.Windows.Forms.Label();
+            this.lblGuildName = new System.Windows.Forms.Label();
+            this.lblToken = new System.Windows.Forms.Label();
+            this.txtToken = new System.Windows.Forms.TextBox();
+            this.btnApplyToken = new System.Windows.Forms.Button();
             this.grpHttpLog = new System.Windows.Forms.GroupBox();
             this.rchPluginLog = new System.Windows.Forms.RichTextBox();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.grpAttributes = new System.Windows.Forms.GroupBox();
+            this.lblSort = new System.Windows.Forms.Label();
+            this.cmbSort = new System.Windows.Forms.ComboBox();
             this.chlAttributes = new System.Windows.Forms.CheckedListBox();
             this.grpOptions.SuspendLayout();
             this.grpHttpLog.SuspendLayout();
@@ -60,59 +69,100 @@ namespace FFXIVPostParse.Control
             // 
             this.chkEnabled.Checked = true;
             this.chkEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEnabled.Location = new System.Drawing.Point(6, 53);
+            this.chkEnabled.Location = new System.Drawing.Point(6, 85);
             this.chkEnabled.Name = "chkEnabled";
             this.chkEnabled.Size = new System.Drawing.Size(249, 24);
             this.chkEnabled.TabIndex = 0;
             this.chkEnabled.Text = "Check this to enable the plugin";
-            this.chkEnabled.CheckedChanged += new System.EventHandler(this.chkEnabled_CheckedChanged);
             // 
             // grpOptions
             // 
-            this.grpOptions.Controls.Add(this.lblPlayerName);
-            this.grpOptions.Controls.Add(this.txtPlayerName);
-            this.grpOptions.Controls.Add(this.btnApplyName);
+            this.grpOptions.Controls.Add(this.lblChannelName);
+            this.grpOptions.Controls.Add(this.lbDiscordChannel);
+            this.grpOptions.Controls.Add(this.lblDiscordGuild);
+            this.grpOptions.Controls.Add(this.lblGuildName);
+            this.grpOptions.Controls.Add(this.lblToken);
+            this.grpOptions.Controls.Add(this.txtToken);
+            this.grpOptions.Controls.Add(this.btnApplyToken);
             this.grpOptions.Controls.Add(this.chkEnabled);
             this.grpOptions.Location = new System.Drawing.Point(9, 3);
             this.grpOptions.Name = "grpOptions";
-            this.grpOptions.Size = new System.Drawing.Size(430, 86);
+            this.grpOptions.Size = new System.Drawing.Size(424, 116);
             this.grpOptions.TabIndex = 0;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Options";
             // 
-            // lblPlayerName
+            // lblChannelName
             // 
-            this.lblPlayerName.Location = new System.Drawing.Point(6, 30);
-            this.lblPlayerName.Name = "lblPlayerName";
-            this.lblPlayerName.Size = new System.Drawing.Size(85, 20);
-            this.lblPlayerName.TabIndex = 2;
-            this.lblPlayerName.Text = "Your log name:";
+            this.lblChannelName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblChannelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChannelName.Location = new System.Drawing.Point(107, 62);
+            this.lblChannelName.Name = "lblChannelName";
+            this.lblChannelName.Size = new System.Drawing.Size(311, 20);
+            this.lblChannelName.TabIndex = 10;
+            this.lblChannelName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtPlayerName
+            // lbDiscordChannel
             // 
-            this.txtPlayerName.Location = new System.Drawing.Point(97, 27);
-            this.txtPlayerName.MaxLength = 20;
-            this.txtPlayerName.Name = "txtPlayerName";
-            this.txtPlayerName.Size = new System.Drawing.Size(187, 20);
-            this.txtPlayerName.TabIndex = 3;
-            this.txtPlayerName.Text = "YOU";
+            this.lbDiscordChannel.Location = new System.Drawing.Point(6, 60);
+            this.lbDiscordChannel.Name = "lbDiscordChannel";
+            this.lbDiscordChannel.Size = new System.Drawing.Size(95, 22);
+            this.lbDiscordChannel.TabIndex = 9;
+            this.lbDiscordChannel.Text = "Discord Channel:";
+            this.lbDiscordChannel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnApplyName
+            // lblDiscordGuild
             // 
-            this.btnApplyName.Location = new System.Drawing.Point(290, 25);
-            this.btnApplyName.Name = "btnApplyName";
-            this.btnApplyName.Size = new System.Drawing.Size(75, 23);
-            this.btnApplyName.TabIndex = 4;
-            this.btnApplyName.Text = "Apply";
-            this.btnApplyName.Click += new System.EventHandler(this.btnApplyName_Click);
+            this.lblDiscordGuild.Location = new System.Drawing.Point(6, 38);
+            this.lblDiscordGuild.Name = "lblDiscordGuild";
+            this.lblDiscordGuild.Size = new System.Drawing.Size(80, 22);
+            this.lblDiscordGuild.TabIndex = 8;
+            this.lblDiscordGuild.Text = "Discord Guild:";
+            this.lblDiscordGuild.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblGuildName
+            // 
+            this.lblGuildName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblGuildName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGuildName.Location = new System.Drawing.Point(107, 40);
+            this.lblGuildName.Name = "lblGuildName";
+            this.lblGuildName.Size = new System.Drawing.Size(311, 20);
+            this.lblGuildName.TabIndex = 7;
+            this.lblGuildName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblToken
+            // 
+            this.lblToken.Location = new System.Drawing.Point(6, 16);
+            this.lblToken.Name = "lblToken";
+            this.lblToken.Size = new System.Drawing.Size(54, 22);
+            this.lblToken.TabIndex = 5;
+            this.lblToken.Text = "Token:";
+            this.lblToken.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtToken
+            // 
+            this.txtToken.Location = new System.Drawing.Point(107, 16);
+            this.txtToken.MaxLength = 30;
+            this.txtToken.Name = "txtToken";
+            this.txtToken.Size = new System.Drawing.Size(230, 20);
+            this.txtToken.TabIndex = 6;
+            this.txtToken.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // btnApplyToken
+            // 
+            this.btnApplyToken.Location = new System.Drawing.Point(343, 15);
+            this.btnApplyToken.Name = "btnApplyToken";
+            this.btnApplyToken.Size = new System.Drawing.Size(75, 23);
+            this.btnApplyToken.TabIndex = 4;
+            this.btnApplyToken.Text = "Apply";
             // 
             // grpHttpLog
             // 
             this.grpHttpLog.Controls.Add(this.rchPluginLog);
             this.grpHttpLog.Controls.Add(this.btnClearLog);
-            this.grpHttpLog.Location = new System.Drawing.Point(3, 95);
+            this.grpHttpLog.Location = new System.Drawing.Point(9, 125);
             this.grpHttpLog.Name = "grpHttpLog";
-            this.grpHttpLog.Size = new System.Drawing.Size(430, 240);
+            this.grpHttpLog.Size = new System.Drawing.Size(430, 256);
             this.grpHttpLog.TabIndex = 1;
             this.grpHttpLog.TabStop = false;
             this.grpHttpLog.Text = "Log";
@@ -123,60 +173,54 @@ namespace FFXIVPostParse.Control
             this.rchPluginLog.Name = "rchPluginLog";
             this.rchPluginLog.ReadOnly = true;
             this.rchPluginLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.rchPluginLog.Size = new System.Drawing.Size(418, 177);
+            this.rchPluginLog.Size = new System.Drawing.Size(418, 193);
             this.rchPluginLog.TabIndex = 1;
             this.rchPluginLog.Text = "";
-            this.rchPluginLog.TextChanged += new System.EventHandler(this.rchPluginLog_TextChanged);
             // 
             // btnClearLog
             // 
-            this.btnClearLog.Location = new System.Drawing.Point(6, 205);
+            this.btnClearLog.Location = new System.Drawing.Point(6, 218);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(75, 23);
             this.btnClearLog.TabIndex = 2;
             this.btnClearLog.Text = "Clear Log";
-            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
             // 
             // grpAttributes
             // 
+            this.grpAttributes.Controls.Add(this.lblSort);
+            this.grpAttributes.Controls.Add(this.cmbSort);
             this.grpAttributes.Controls.Add(this.chlAttributes);
             this.grpAttributes.Location = new System.Drawing.Point(445, 3);
             this.grpAttributes.Name = "grpAttributes";
-            this.grpAttributes.Size = new System.Drawing.Size(178, 332);
+            this.grpAttributes.Size = new System.Drawing.Size(178, 378);
             this.grpAttributes.TabIndex = 2;
             this.grpAttributes.TabStop = false;
             this.grpAttributes.Text = "Include Attributes";
             // 
+            // lblSort
+            // 
+            this.lblSort.Location = new System.Drawing.Point(6, 340);
+            this.lblSort.Name = "lblSort";
+            this.lblSort.Size = new System.Drawing.Size(45, 23);
+            this.lblSort.TabIndex = 6;
+            this.lblSort.Text = "Sort By:";
+            this.lblSort.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cmbSort
+            // 
+            this.cmbSort.Items.AddRange(new object[] {
+            ""});
+            this.cmbSort.Location = new System.Drawing.Point(57, 342);
+            this.cmbSort.Name = "cmbSort";
+            this.cmbSort.Size = new System.Drawing.Size(113, 21);
+            this.cmbSort.TabIndex = 7;
+            // 
             // chlAttributes
             // 
             this.chlAttributes.CheckOnClick = true;
-            this.chlAttributes.Items.AddRange(new object[] {
-            AttributeEnum.START_TIME,
-            AttributeEnum.DURATION,
-            AttributeEnum.MAX_HIT_PARTY,
-            AttributeEnum.TOTAL_HEALING,
-            AttributeEnum.MAP_NAME,
-            AttributeEnum.BOSS_NAME,
-            AttributeEnum.PLAYER_JOB,
-            AttributeEnum.PLAYER_NAME,
-            AttributeEnum.DPS,
-            AttributeEnum.DAMAGE_PERCENTAGE,
-            AttributeEnum.MAX_HIT_INDIVIDUAL,
-            AttributeEnum.HPS,
-            AttributeEnum.HEALING_PERCENTAGE,
-            AttributeEnum.MAX_HEAL,
-            AttributeEnum.OVERHEAL_PERCENTAGE,
-            AttributeEnum.DEATHS,
-            AttributeEnum.CRITS,
-            AttributeEnum.MISSES});
-            this.chlAttributes.SetItemChecked(4, true);
-            this.chlAttributes.SetItemChecked(5, true);
-            this.chlAttributes.SetItemChecked(6, true);
-            this.chlAttributes.SetItemChecked(7, true);
-            this.chlAttributes.SetItemChecked(8, true);
             this.chlAttributes.Location = new System.Drawing.Point(6, 16);
             this.chlAttributes.Name = "chlAttributes";
-            this.chlAttributes.Size = new System.Drawing.Size(164, 304);
+            this.chlAttributes.Size = new System.Drawing.Size(164, 319);
             this.chlAttributes.TabIndex = 1;
             // 
             // PluginControl
@@ -187,7 +231,7 @@ namespace FFXIVPostParse.Control
             this.Controls.Add(this.grpHttpLog);
             this.Controls.Add(this.grpAttributes);
             this.Name = "PluginControl";
-            this.Size = new System.Drawing.Size(643, 348);
+            this.Size = new System.Drawing.Size(644, 449);
             this.grpOptions.ResumeLayout(false);
             this.grpOptions.PerformLayout();
             this.grpHttpLog.ResumeLayout(false);
@@ -197,5 +241,58 @@ namespace FFXIVPostParse.Control
         }
 
         #endregion
+
+        private void FillLists()
+        {
+            this.grpAttributes.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // chlAttributes
+            // 
+            this.chlAttributes.Items.AddRange(new object[]
+            {
+                AttributeEnum.MaxHitParty,
+                AttributeEnum.TotalHealing,
+                AttributeEnum.MapName,
+                AttributeEnum.DamagePerc,
+                AttributeEnum.MaxHitIndividual,
+                AttributeEnum.HPS,
+                AttributeEnum.HealingPerc,
+                AttributeEnum.MaxHeal,
+                AttributeEnum.OverHealPerc,
+                AttributeEnum.Deaths,
+                AttributeEnum.Crits,
+                AttributeEnum.CritDmgPerc,
+                AttributeEnum.CritHealPerc,
+                AttributeEnum.Misses
+            });
+
+            // 
+            // cmbSort
+            // 
+            this.cmbSort.Items.AddRange(new object[]
+            {
+                AttributeEnum.DPS,
+                AttributeEnum.HPS
+            });
+
+            this.grpAttributes.ResumeLayout(false);
+            this.ResumeLayout(false);
+        }
+
+        private void AttachEvents()
+        {
+            this.chkEnabled.CheckedChanged += this.chkEnabled_CheckedChanged;
+            this.btnApplyToken.Click += this.btnApplyToken_Click;
+            this.rchPluginLog.TextChanged += this.rchPluginLog_TextChanged;
+            this.btnClearLog.Click += this.btnClearLog_Click;
+            this.chlAttributes.ItemCheck += this.chlAttributes_ItemCheck;
+            this.cmbSort.SelectedIndexChanged += this.cmbSort_SelectedIndexChanged;
+            this.Load += this.PluginControl_Load;
+        }
+
+        private Label lblChannelName;
+        private Label lbDiscordChannel;
+        private Label lblDiscordGuild;
     }
 }
