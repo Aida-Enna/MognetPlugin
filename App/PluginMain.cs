@@ -10,6 +10,7 @@ using MognetPlugin.Util;
 using MognetPlugin.Model;
 using MognetPlugin.Properties;
 using MognetPlugin.Http;
+using MognetPlugin.Service;
 
 namespace MognetPlugin
 {
@@ -18,6 +19,7 @@ namespace MognetPlugin
         TabPage TabPage;
         Label PluginStatusLabel;
         PluginControl PluginControl;
+        DiscordService Service;
 
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
@@ -31,11 +33,13 @@ namespace MognetPlugin
             this.PluginControl.Dock = DockStyle.Fill;
             this.TabPage.Controls.Add(this.PluginControl);
 
+            this.Service = new DiscordService();
+
             ActGlobals.oFormActMain.OnCombatStart += CombatStarted;
             ActGlobals.oFormActMain.OnCombatEnd += CombatEnded;
 
             this.PluginControl.LogInfo("Plugin started.");
-            if (IsEnabled())
+            if (PluginUtil.IsPluginEnabled())
             {
                 this.PluginControl.LogInfo("Waiting the next encounter...");
             }
@@ -49,7 +53,7 @@ namespace MognetPlugin
         
         private void CombatStarted(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            if (IsEnabled())
+            if (PluginUtil.IsPluginEnabled())
             {
                 PluginControl.LogInfo("Encounter detected! Will send the parse after it finishes...");
             }
@@ -57,17 +61,15 @@ namespace MognetPlugin
 
         private void CombatEnded(bool isImport, CombatToggleEventArgs encounterInfo)
         {
-            if (IsEnabled())
+            if (PluginUtil.IsPluginEnabled())
             {
                 try
                 {
                     Log Log = PluginUtil.ACTEncounterToModel(encounterInfo.encounter);
-                    JavaScriptSerializer Serializer = new JavaScriptSerializer();
-                    String Json = Serializer.Serialize(Log);
-                    PluginHttpClient Client = new PluginHttpClient();
-                    HttpResponseMessage Result = Client.PostDiscord(Json, (string)PluginSettings.GetSetting("Token"));
+                    string Json = PluginUtil.ToJson(Log);
+                    bool Sent = Service.PostDiscord(Json, PluginSettings.GetSetting<string>("Token"));
                     
-                    if (Result.IsSuccessStatusCode)
+                    if (Sent)
                     {
                         PluginControl.LogInfo("Parse sent to your Discord channel.");
                         this.PluginControl.LogInfo("Waiting the next encounter...");
@@ -77,18 +79,11 @@ namespace MognetPlugin
                         PluginControl.LogInfo("Could not send the parse to your Discord channel. Check your token.");
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     PluginControl.LogInfo("Something went wrong.");
                 }
             }
-        }
-
-        private bool IsEnabled()
-        {
-            bool enabled = (bool)PluginSettings.GetSetting("Enabled");
-            string token = (string)PluginSettings.GetSetting("Token");
-            return enabled && token != null;
         }
     }
 }

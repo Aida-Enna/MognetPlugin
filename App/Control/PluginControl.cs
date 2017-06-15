@@ -1,6 +1,7 @@
 ﻿using MognetPlugin.Http;
 using MognetPlugin.Model;
 using MognetPlugin.Properties;
+using MognetPlugin.Service;
 using System;
 using System.Net.Http;
 using System.Web.Script.Serialization;
@@ -10,11 +11,14 @@ namespace MognetPlugin.Control
 {
     public partial class PluginControl : UserControl
     {
+        DiscordService Service;
+
         public PluginControl()
         {
             InitializeComponent();
             FillLists();
             AttachEvents();
+            Service = new DiscordService();
         }
 
         
@@ -28,28 +32,28 @@ namespace MognetPlugin.Control
 
         private void PluginControl_Load(object sender, System.EventArgs e)
         {
-            this.chkEnabled.Checked = (bool)PluginSettings.GetSetting("Enabled");
-            this.txtToken.Text = (string)PluginSettings.GetSetting("Token");
-            this.lblGuildName.Text = (string)PluginSettings.GetSetting("GuildName");
-            this.lblChannelName.Text = (string)PluginSettings.GetSetting("ChannelName");
-            this.txtToken.Text = (string)PluginSettings.GetSetting("Token");
+            this.chkEnabled.Checked = PluginSettings.GetSetting<bool>("Enabled");
+            this.txtToken.Text = PluginSettings.GetSetting<string>("Token");
+            this.lblGuildName.Text = PluginSettings.GetSetting<string>("GuildName");
+            this.lblChannelName.Text = PluginSettings.GetSetting<string>("ChannelName");
+            this.txtToken.Text = PluginSettings.GetSetting<string>("Token");
 
-            this.chlAttributes.SetItemChecked(0, (bool)PluginSettings.GetSetting("MaxHitParty"));
-            this.chlAttributes.SetItemChecked(1, (bool)PluginSettings.GetSetting("TotalHealing"));
-            this.chlAttributes.SetItemChecked(2, (bool)PluginSettings.GetSetting("MapName"));
-            this.chlAttributes.SetItemChecked(3, (bool)PluginSettings.GetSetting("DamagePerc"));
-            this.chlAttributes.SetItemChecked(4, (bool)PluginSettings.GetSetting("MaxHitIndividual"));
-            this.chlAttributes.SetItemChecked(5, (bool)PluginSettings.GetSetting("HPS"));
-            this.chlAttributes.SetItemChecked(6, (bool)PluginSettings.GetSetting("HealingPerc"));
-            this.chlAttributes.SetItemChecked(7, (bool)PluginSettings.GetSetting("MaxHeal"));
-            this.chlAttributes.SetItemChecked(8, (bool)PluginSettings.GetSetting("OverHealPerc"));
-            this.chlAttributes.SetItemChecked(9, (bool)PluginSettings.GetSetting("Deaths"));
-            this.chlAttributes.SetItemChecked(10, (bool)PluginSettings.GetSetting("Crits"));
-            this.chlAttributes.SetItemChecked(11, (bool)PluginSettings.GetSetting("CritDmgPerc"));
-            this.chlAttributes.SetItemChecked(12, (bool)PluginSettings.GetSetting("CritHealPerc"));
-            this.chlAttributes.SetItemChecked(13, (bool)PluginSettings.GetSetting("Misses"));
+            this.chlAttributes.SetItemChecked(0, PluginSettings.GetSetting<bool>("MaxHitParty"));
+            this.chlAttributes.SetItemChecked(1, PluginSettings.GetSetting<bool>("TotalHealing"));
+            this.chlAttributes.SetItemChecked(2, PluginSettings.GetSetting<bool>("MapName"));
+            this.chlAttributes.SetItemChecked(3, PluginSettings.GetSetting<bool>("DamagePerc"));
+            this.chlAttributes.SetItemChecked(4, PluginSettings.GetSetting<bool>("MaxHitIndividual"));
+            this.chlAttributes.SetItemChecked(5, PluginSettings.GetSetting<bool>("HPS"));
+            this.chlAttributes.SetItemChecked(6, PluginSettings.GetSetting<bool>("HealingPerc"));
+            this.chlAttributes.SetItemChecked(7, PluginSettings.GetSetting<bool>("MaxHeal"));
+            this.chlAttributes.SetItemChecked(8, PluginSettings.GetSetting<bool>("OverHealPerc"));
+            this.chlAttributes.SetItemChecked(9, PluginSettings.GetSetting<bool>("Deaths"));
+            this.chlAttributes.SetItemChecked(10, PluginSettings.GetSetting<bool>("Crits"));
+            this.chlAttributes.SetItemChecked(11, PluginSettings.GetSetting<bool>("CritDmgPerc"));
+            this.chlAttributes.SetItemChecked(12, PluginSettings.GetSetting<bool>("CritHealPerc"));
+            this.chlAttributes.SetItemChecked(13, PluginSettings.GetSetting<bool>("Misses"));
 
-            this.cmbSort.Text = (string)PluginSettings.GetSetting("SortBy");
+            this.cmbSort.Text = PluginSettings.GetSetting<string>("SortBy");
         }
 
         private void chlAttributes_ItemCheck(object sender, EventArgs e)
@@ -117,38 +121,26 @@ namespace MognetPlugin.Control
             }
         }
 
-        private async void btnApplyToken_Click(object sender, EventArgs e)
+        private void btnApplyToken_Click(object sender, EventArgs e)
         {
-            try
+            DiscordChannel Channel = Service.CheckToken(txtToken.Text).Result;
+            if (Channel != null)
             {
-                JavaScriptSerializer Serializer = new JavaScriptSerializer();
-                PluginHttpClient Client = new PluginHttpClient();
-                HttpResponseMessage response = Client.Get(txtToken.Text);
-                if (response.IsSuccessStatusCode)
-                {
-                    DiscordChannel DiscordChannel = Serializer.Deserialize<DiscordChannel>(await response.Content.ReadAsStringAsync());
-
-                    lblGuildName.Text = DiscordChannel.guild;
-                    lblChannelName.Text = DiscordChannel.channel;
-                    PluginSettings.SetSetting("Token", txtToken.Text);
-                    PluginSettings.SetSetting("GuildName", lblGuildName.Text);
-                    PluginSettings.SetSetting("ChannelName", lblChannelName.Text);
-                }
-                else
-                {
-                    lblGuildName.Text = "";
-                    lblChannelName.Text = "";
-                    txtToken.Text = "";
-                    PluginSettings.SetSetting("Token", "");
-                    PluginSettings.SetSetting("GuildName", "");
-                    PluginSettings.SetSetting("ChannelName", "");
-                }
-            } catch (Exception ex)
-            {
-                LogInfo("Something went wrong.");
-                MessageBox.Show(ex.Message);
+                lblGuildName.Text = Channel.guild;
+                lblChannelName.Text = Channel.channel;
+                PluginSettings.SetSetting("Token", txtToken.Text);
+                PluginSettings.SetSetting("GuildName", lblGuildName.Text);
+                PluginSettings.SetSetting("ChannelName", lblChannelName.Text);
             }
-            
+            else
+            {
+                lblGuildName.Text = "";
+                lblChannelName.Text = "";
+                txtToken.Text = "";
+                PluginSettings.SetSetting("Token", "");
+                PluginSettings.SetSetting("GuildName", "");
+                PluginSettings.SetSetting("ChannelName", "");
+            }
         }
 
         private void cmbSort_SelectedIndexChanged(object sender, EventArgs e)

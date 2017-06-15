@@ -17,9 +17,9 @@ namespace MognetPlugin.Properties {
         
         private static PluginSettings defaultInstance = ((PluginSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new PluginSettings())));
 
-        public static object GetSetting(string key)
+        public static T GetSetting<T>(string key)
         {
-            return defaultInstance[key];
+            return (T)defaultInstance[key];
         }
 
         public static void SetSetting(string key, object value)

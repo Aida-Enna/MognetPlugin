@@ -3,11 +3,32 @@ using MognetPlugin.Enum;
 using MognetPlugin.Model;
 using MognetPlugin.Properties;
 using System;
+using System.Web.Script.Serialization;
 
 namespace MognetPlugin.Util
 {
     class PluginUtil
     {
+        private static JavaScriptSerializer Serializer = new JavaScriptSerializer();
+
+
+        public static string ToJson(object obj)
+        {
+            return Serializer.Serialize(obj);
+
+        }
+
+        public static T FromJson<T>(string json)
+        {
+            return Serializer.Deserialize<T>(json);
+        }
+
+        public static bool IsPluginEnabled()
+        {
+            bool enabled = PluginSettings.GetSetting<bool>("Enabled");
+            string token = PluginSettings.GetSetting<string>("Token");
+            return enabled && token != null;
+        }
 
         public static Log ACTEncounterToModel(EncounterData encounter)
         {
@@ -19,7 +40,7 @@ namespace MognetPlugin.Util
             Log.totalHealing = ValidateAndFill("TotalHealing", encounter.Healed.ToString());
             Log.targetName = encounter.GetStrongestEnemy(null);
             Log.mapName = ValidateAndFill("MapName", encounter.ZoneName);
-            Log.sortBy = (string)PluginSettings.GetSetting("SortBy");
+            Log.sortBy = PluginSettings.GetSetting<string>("SortBy");
             encounter.GetAllies().ForEach(combatant =>
             {
                 Player Player = new Player();
@@ -55,7 +76,7 @@ namespace MognetPlugin.Util
 
         private static String ValidateAndFill(string setting, string data)
         {
-            if ((bool)PluginSettings.GetSetting(setting)) {
+            if (PluginSettings.GetSetting<bool>(setting)) {
                 return data;
             }
 

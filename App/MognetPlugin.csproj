@@ -66,6 +66,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>PluginSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Service\DiscordService.cs" />
     <Compile Include="Util\PluginUtil.cs" />
   </ItemGroup>
   <ItemGroup>

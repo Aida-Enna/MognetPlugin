@@ -23,7 +23,7 @@ namespace MognetPlugin.Http
             return Client.PostAsync(new Uri(BaseURL + "/discord"), Body).Result;
         }
 
-        public HttpResponseMessage Get(string token)
+        public HttpResponseMessage CheckToken(string token)
         {
             return Client.GetAsync(new Uri(BaseURL + "/check-token/" + token)).Result;
         }
