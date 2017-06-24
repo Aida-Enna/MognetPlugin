@@ -3,7 +3,9 @@ using MognetPlugin.Enum;
 using MognetPlugin.Model;
 using MognetPlugin.Properties;
 using System;
+using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
+using System.Windows.Forms;
 
 namespace MognetPlugin.Util
 {
@@ -44,32 +46,39 @@ namespace MognetPlugin.Util
             encounter.GetAllies().ForEach(combatant =>
             {
                 Player Player = new Player();
-                if (!IsLimitBreak(combatant.Name))
+
+                if (IsLimitBreak(combatant.Name))
                 {
-                    Player.playerJob = GetCustomColumnData(combatant, "Job");
                     Player.playerName = combatant.Name;
+                    Player.maxHit = combatant.GetMaxHit(true);
+
+                    Log.players.Add(Player);
+                }
+                else if (!IsLimitBreak(combatant.Name) && GetCustomColumnData(combatant, "Job") != "")
+                {
+                    Player.playerJob = GetCustomColumnData(combatant, "Job").ToUpper();
+                    Player.playerName = FormatName(combatant.Name);
                     Player.damagePercentage = ValidateAndFill("DamagePerc", combatant.DamagePercent);
                     Player.dps = Math.Round(combatant.EncDPS).ToString();
-                    Player.maxHit = ValidateAndFill("MaxHitIndividual", combatant.GetMaxHit(true));
+                    Player.maxHit = FormatSkill(ValidateAndFill("MaxHitIndividual", combatant.GetMaxHit(true)));
                     Player.healingPercentage = ValidateAndFill("HealingPerc", combatant.HealedPercent);
                     Player.hps = ValidateAndFill("HPS", Math.Round(combatant.EncHPS).ToString());
-                    Player.maxHeal = ValidateAndFill("MaxHeal", combatant.GetMaxHeal(true, false));
+                    Player.maxHeal = FormatSkill(ValidateAndFill("MaxHeal", combatant.GetMaxHeal(true, false)));
                     Player.overhealPercentage = ValidateAndFill("OverHealPerc", GetCustomColumnData(combatant, "OverHealPct"));
                     Player.deaths = ValidateAndFill("Deaths", combatant.Deaths.ToString());
                     Player.crits = ValidateAndFill("Crits", combatant.CritHits.ToString());
                     Player.critDmgPercentage = ValidateAndFill("CritDmgPerc", Math.Round(combatant.CritDamPerc).ToString());
                     Player.critHealPercentage = ValidateAndFill("CritHealPerc", Math.Round(combatant.CritHealPerc).ToString());
                     Player.misses = ValidateAndFill("Misses", combatant.Misses.ToString());
-                }
-                else
-                {
-                    Player.playerName = combatant.Name;
-                    Player.maxHit = combatant.GetMaxHit(true);
-                }
-                
 
-                Log.players.Add(Player);
+                    Log.players.Add(Player);
+                }
             });
+
+            if (Log.players.Count == 0)
+            {
+                return null;
+            }
 
             return Log;
         }
@@ -97,6 +106,36 @@ namespace MognetPlugin.Util
         private static bool IsLimitBreak(string charName)
         {
             return "Limit Break".Equals(charName);
+        }
+
+        private static string FormatSkill(string skillHit)
+        {
+            if (skillHit != "")
+            {
+                string skill = MatchOne(skillHit, @".*(?=-.)");
+                string damage = MatchOne(skillHit, @"[^-]+$");
+
+                if (skill.Length >= 10)
+                {
+                    skill = skill.Substring(0, 10);
+                }
+
+                return skill + "-" + damage;
+            }
+            
+            return "";
+        }
+
+        private static string FormatName(string name)
+        {
+            return name.Substring(0, 20);
+        }
+
+        private static string MatchOne(string text, string regex)
+        {
+            Regex r = new Regex(regex, RegexOptions.IgnoreCase);
+            Match m = r.Match(text);
+            return m.Groups[0].ToString().Trim();
         }
     }
 }
