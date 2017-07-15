@@ -13,6 +13,8 @@ In order to make this plugin to work properly, you will need to have both below 
 * [Advanced Combat Tracker](http://advancedcombattracker.com/includes/page-download.php?id=56);
 * [Ravahn's FFXIV_ACT_Plugin](http://advancedcombattracker.com/includes/page-download.php?id=66);
 
+Also, be sure to download the latest version of the plugin on the [releases](https://github.com/castanhob/MognetPlugin/releases) page!
+
 Setup
 -----
 Check the [wiki](https://github.com/castanhob/MognetPlugin/wiki/Mognet-Setup-Guide).
