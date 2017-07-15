@@ -261,10 +261,10 @@ namespace MognetPlugin.Control
                 AttributeEnum.MaxHeal,
                 AttributeEnum.OverHealPerc,
                 AttributeEnum.Deaths,
-                AttributeEnum.Crits,
-                AttributeEnum.CritDmgPerc,
-                AttributeEnum.CritHealPerc,
-                AttributeEnum.Misses
+                AttributeEnum.Crit,
+                AttributeEnum.DirectHit,
+                AttributeEnum.DirectHitCrit,
+                AttributeEnum.CritHealPerc
             });
 
             // 

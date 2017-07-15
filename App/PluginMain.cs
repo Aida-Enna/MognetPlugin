@@ -11,6 +11,7 @@ using MognetPlugin.Model;
 using MognetPlugin.Properties;
 using MognetPlugin.Http;
 using MognetPlugin.Service;
+using System.Text.RegularExpressions;
 
 namespace MognetPlugin
 {
@@ -25,7 +26,7 @@ namespace MognetPlugin
         {
             this.TabPage = pluginScreenSpace;
             this.PluginStatusLabel = pluginStatusText;
-
+ 
             this.PluginStatusLabel.Text = "Mognet Plugin";
             this.TabPage.Text = "Mognet Plugin";
 
@@ -66,22 +67,28 @@ namespace MognetPlugin
                 try
                 {
                     Log Log = PluginUtil.ACTEncounterToModel(encounterInfo.encounter);
-                    string Json = PluginUtil.ToJson(Log);
-                    bool Sent = Service.PostDiscord(Json, PluginSettings.GetSetting<string>("Token"));
-                    
-                    if (Sent)
+                    if (Log != null)
                     {
-                        PluginControl.LogInfo("Parse sent to your Discord channel.");
-                        this.PluginControl.LogInfo("Waiting the next encounter...");
-                    }
-                    else
+                        string Json = PluginUtil.ToJson(Log);
+                        bool Sent = Service.PostDiscord(Json, PluginSettings.GetSetting<string>("Token"));
+
+                        if (Sent)
+                        {
+                            PluginControl.LogInfo("Parse sent to your Discord channel.");
+                            PluginControl.LogInfo("Waiting the next encounter...");
+                        }
+                        else
+                        {
+                            PluginControl.LogInfo("Could not send the parse to your Discord channel. Check your token.");
+                        }
+                    } else
                     {
-                        PluginControl.LogInfo("Could not send the parse to your Discord channel. Check your token.");
+                        PluginControl.LogInfo("Nothing to be sent. Waiting the next encounter...");
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    PluginControl.LogInfo("Something went wrong.");
+                    PluginControl.LogInfo("Something went wrong. " + ex.Message);
                 }
             }
         }

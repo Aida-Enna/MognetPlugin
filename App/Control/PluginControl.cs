@@ -48,10 +48,10 @@ namespace MognetPlugin.Control
             this.chlAttributes.SetItemChecked(7, PluginSettings.GetSetting<bool>("MaxHeal"));
             this.chlAttributes.SetItemChecked(8, PluginSettings.GetSetting<bool>("OverHealPerc"));
             this.chlAttributes.SetItemChecked(9, PluginSettings.GetSetting<bool>("Deaths"));
-            this.chlAttributes.SetItemChecked(10, PluginSettings.GetSetting<bool>("Crits"));
-            this.chlAttributes.SetItemChecked(11, PluginSettings.GetSetting<bool>("CritDmgPerc"));
-            this.chlAttributes.SetItemChecked(12, PluginSettings.GetSetting<bool>("CritHealPerc"));
-            this.chlAttributes.SetItemChecked(13, PluginSettings.GetSetting<bool>("Misses"));
+            this.chlAttributes.SetItemChecked(10, PluginSettings.GetSetting<bool>("Crit"));
+            this.chlAttributes.SetItemChecked(11, PluginSettings.GetSetting<bool>("DirectHit"));
+            this.chlAttributes.SetItemChecked(12, PluginSettings.GetSetting<bool>("DirectHitCrit"));
+            this.chlAttributes.SetItemChecked(13, PluginSettings.GetSetting<bool>("CritHealPerc"));
 
             this.cmbSort.Text = PluginSettings.GetSetting<string>("SortBy");
         }
@@ -93,16 +93,16 @@ namespace MognetPlugin.Control
                     PluginSettings.SetSetting("Deaths", Checked(args.NewValue));
                     break;
                 case 10:
-                    PluginSettings.SetSetting("Crits", Checked(args.NewValue));
+                    PluginSettings.SetSetting("Crit", Checked(args.NewValue));
                     break;
                 case 11:
-                    PluginSettings.SetSetting("CritDmgPerc", Checked(args.NewValue));
+                    PluginSettings.SetSetting("DirectHit", Checked(args.NewValue));
                     break;
                 case 12:
-                    PluginSettings.SetSetting("CritHealPerc", Checked(args.NewValue));
+                    PluginSettings.SetSetting("DirectHitCrit", Checked(args.NewValue));
                     break;
                 case 13:
-                    PluginSettings.SetSetting("Misses", Checked(args.NewValue));
+                    PluginSettings.SetSetting("CritHealPerc", Checked(args.NewValue));
                     break;
             }
         }

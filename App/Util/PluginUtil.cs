@@ -66,16 +66,16 @@ namespace MognetPlugin.Util
                     Player.maxHeal = FormatSkill(ValidateAndFill("MaxHeal", combatant.GetMaxHeal(true, false)));
                     Player.overhealPercentage = ValidateAndFill("OverHealPerc", GetCustomColumnData(combatant, "OverHealPct"));
                     Player.deaths = ValidateAndFill("Deaths", combatant.Deaths.ToString());
-                    Player.crits = ValidateAndFill("Crits", combatant.CritHits.ToString());
-                    Player.critDmgPercentage = ValidateAndFill("CritDmgPerc", Math.Round(combatant.CritDamPerc).ToString());
+                    Player.crit = ValidateAndFill("Crit", Math.Round(combatant.CritDamPerc).ToString());
+                    Player.dh = ValidateAndFill("DirectHit", GetCustomColumnData(combatant, "DirectHitPct"));
+                    Player.dhCrit = ValidateAndFill("DirectHitCrit", GetCustomColumnData(combatant, "CritDirectHitPct"));
                     Player.critHealPercentage = ValidateAndFill("CritHealPerc", Math.Round(combatant.CritHealPerc).ToString());
-                    Player.misses = ValidateAndFill("Misses", combatant.Misses.ToString());
 
                     Log.players.Add(Player);
                 }
             });
 
-            if (Log.players.Count == 0)
+            if (Log.players.Count == 0 || Log.duration == "00:00:00")
             {
                 return null;
             }
@@ -112,10 +112,10 @@ namespace MognetPlugin.Util
         {
             if (skillHit != "")
             {
-                string skill = MatchOne(skillHit, @".*(?=-.)");
+                string skill = MatchOne(skillHit, @".*(?=-.)").Replace(" ", "");
                 string damage = MatchOne(skillHit, @"[^-]+$");
 
-                if (skill.Length >= 10)
+                if (skill.Length > 10)
                 {
                     skill = skill.Substring(0, 10);
                 }
@@ -128,7 +128,12 @@ namespace MognetPlugin.Util
 
         private static string FormatName(string name)
         {
-            return name.Substring(0, 20);
+            if (name.Length > 20)
+            {
+                return name.Substring(0, 20);
+            }
+
+            return name;
         }
 
         private static string MatchOne(string text, string regex)

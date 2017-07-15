@@ -199,27 +199,45 @@ namespace MognetPlugin.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Crits {
+        public bool Crit {
             get {
-                return ((bool)(this["Crits"]));
+                return ((bool)(this["Crit"]));
             }
             set {
-                this["Crits"] = value;
+                this["Crit"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CritDmgPerc {
-            get {
-                return ((bool)(this["CritDmgPerc"]));
+        public bool DirectHit
+        {
+            get
+            {
+                return ((bool)(this["DirectHit"]));
             }
-            set {
-                this["CritDmgPerc"] = value;
+            set
+            {
+                this["DirectHit"] = value;
             }
         }
-        
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DirectHitCrit
+        {
+            get
+            {
+                return ((bool)(this["DirectHitCrit"]));
+            }
+            set
+            {
+                this["DirectHitCrit"] = value;
+            }
+        }
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
@@ -229,18 +247,6 @@ namespace MognetPlugin.Properties {
             }
             set {
                 this["CritHealPerc"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Misses {
-            get {
-                return ((bool)(this["Misses"]));
-            }
-            set {
-                this["Misses"] = value;
             }
         }
         

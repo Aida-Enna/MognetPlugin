@@ -14,10 +14,10 @@ namespace MognetPlugin.Model
         public String maxHeal { get; set; }
         public String overhealPercentage { get; set; }
         public String deaths { get; set; }
-        public String crits { get; set; }
-        public String critDmgPercentage { get; set; }
+        public String crit { get; set; }
+        public String dh { get; set; }
+        public String dhCrit { get; set; }
         public String critHealPercentage { get; set; }
-        public String misses { get; set; }
 
         public Player()
         {
@@ -30,10 +30,10 @@ namespace MognetPlugin.Model
             this.maxHeal = "";
             this.overhealPercentage = "";
             this.deaths = "";
-            this.crits = "";
-            this.critDmgPercentage = "";
+            this.crit = "";
+            this.dh = "";
+            this.dhCrit = "";
             this.critHealPercentage = "";
-            this.misses = "";
         }
     }
 }

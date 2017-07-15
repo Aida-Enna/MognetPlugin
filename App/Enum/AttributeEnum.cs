@@ -18,10 +18,10 @@
         public static readonly AttributeEnum MaxHeal = new AttributeEnum("Max Heal");
         public static readonly AttributeEnum OverHealPerc = new AttributeEnum("Overheal%");
         public static readonly AttributeEnum Deaths = new AttributeEnum("Deaths");
-        public static readonly AttributeEnum Crits = new AttributeEnum("Crits");
-        public static readonly AttributeEnum CritDmgPerc = new AttributeEnum("Crit Dmg%");
+        public static readonly AttributeEnum Crit = new AttributeEnum("Crit%");
+        public static readonly AttributeEnum DirectHit = new AttributeEnum("Direct Hit%");
+        public static readonly AttributeEnum DirectHitCrit = new AttributeEnum("Direct Hit Crit%");
         public static readonly AttributeEnum CritHealPerc = new AttributeEnum("Crit Heal%");
-        public static readonly AttributeEnum Misses = new AttributeEnum("Misses");
 
         public string Name { get; }
 
