@@ -37,3 +37,13 @@ Contributing
 
 You can also contribute pointing a bug into the [issues](https://github.com/castanhob/MognetPlugin/issues) section.
 The server side code is private right now, but I'll make it public soon!
+
+Donation
+--------
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YUN5D9RUMXE4Y)
+
+Is the plugin being useful? Do you want to suport me and show your appreciation? You can donate via PayPal!
+Every donation will be greatly appreaciated and I'll work to make it even better!
+
+May your parses be good and enjoy the Omega raid folks! :)
