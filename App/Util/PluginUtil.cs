@@ -5,19 +5,16 @@ using MognetPlugin.Properties;
 using System;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
-using System.Windows.Forms;
 
 namespace MognetPlugin.Util
 {
-    class PluginUtil
+    internal class PluginUtil
     {
         private static JavaScriptSerializer Serializer = new JavaScriptSerializer();
-
 
         public static string ToJson(object obj)
         {
             return Serializer.Serialize(obj);
-
         }
 
         public static T FromJson<T>(string json)
@@ -85,7 +82,8 @@ namespace MognetPlugin.Util
 
         private static String ValidateAndFill(string setting, string data)
         {
-            if (PluginSettings.GetSetting<bool>(setting)) {
+            if (PluginSettings.GetSetting<bool>(setting))
+            {
                 return data;
             }
 
@@ -122,7 +120,7 @@ namespace MognetPlugin.Util
 
                 return skill + "-" + damage;
             }
-            
+
             return "";
         }
 

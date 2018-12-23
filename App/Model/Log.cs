@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MognetPlugin.Model
 {
-    class Log
+    internal class Log
     {
         public String successLevel { get; set; }
         public String startTime { get; set; }

@@ -11,7 +11,7 @@ namespace MognetPlugin.Enum
         public int Code { get; }
         public string Name { get; }
 
-        SuccessLevelEnum(int code, string name)
+        private SuccessLevelEnum(int code, string name)
         {
             this.Code = code;
             this.Name = name;
@@ -57,9 +57,9 @@ namespace MognetPlugin.Enum
             return this.Code.Equals(item.Code);
         }
 
-        public override int GetHashCode() { 
+        public override int GetHashCode()
+        {
             return this.Code.GetHashCode();
         }
     }
-
 }

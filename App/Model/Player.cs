@@ -2,7 +2,7 @@
 
 namespace MognetPlugin.Model
 {
-    class Player
+    internal class Player
     {
         public String playerJob { get; set; }
         public String playerName { get; set; }

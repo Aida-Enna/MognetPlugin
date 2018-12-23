@@ -267,6 +267,8 @@ namespace MognetPlugin.Control
                 AttributeEnum.CritHealPerc
             });
 
+            this.chlAttributes.Sorted = true;
+
             // 
             // cmbSort
             // 

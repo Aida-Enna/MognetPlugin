@@ -1,17 +1,14 @@
-﻿using MognetPlugin.Http;
-using MognetPlugin.Model;
+﻿using MognetPlugin.Model;
 using MognetPlugin.Properties;
 using MognetPlugin.Service;
 using System;
-using System.Net.Http;
-using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace MognetPlugin.Control
 {
     public partial class PluginControl : UserControl
     {
-        DiscordService Service;
+        private DiscordService Service;
 
         public PluginControl()
         {
@@ -20,8 +17,6 @@ namespace MognetPlugin.Control
             AttachEvents();
             Service = new DiscordService();
         }
-
-        
 
         public void LogInfo(String text)
         {
@@ -65,42 +60,55 @@ namespace MognetPlugin.Control
                 case 0:
                     PluginSettings.SetSetting("MaxHitParty", Checked(args.NewValue));
                     break;
+
                 case 1:
                     PluginSettings.SetSetting("TotalHealing", Checked(args.NewValue));
                     break;
+
                 case 2:
                     PluginSettings.SetSetting("MapName", Checked(args.NewValue));
                     break;
+
                 case 3:
                     PluginSettings.SetSetting("DamagePerc", Checked(args.NewValue));
                     break;
+
                 case 4:
                     PluginSettings.SetSetting("MaxHitIndividual", Checked(args.NewValue));
                     break;
+
                 case 5:
                     PluginSettings.SetSetting("HPS", Checked(args.NewValue));
                     break;
+
                 case 6:
                     PluginSettings.SetSetting("HealingPerc", Checked(args.NewValue));
                     break;
+
                 case 7:
                     PluginSettings.SetSetting("MaxHeal", Checked(args.NewValue));
                     break;
+
                 case 8:
                     PluginSettings.SetSetting("OverHealPerc", Checked(args.NewValue));
                     break;
+
                 case 9:
                     PluginSettings.SetSetting("Deaths", Checked(args.NewValue));
                     break;
+
                 case 10:
                     PluginSettings.SetSetting("Crit", Checked(args.NewValue));
                     break;
+
                 case 11:
                     PluginSettings.SetSetting("DirectHit", Checked(args.NewValue));
                     break;
+
                 case 12:
                     PluginSettings.SetSetting("DirectHitCrit", Checked(args.NewValue));
                     break;
+
                 case 13:
                     PluginSettings.SetSetting("CritHealPerc", Checked(args.NewValue));
                     break;
@@ -126,6 +134,7 @@ namespace MognetPlugin.Control
             DiscordChannel Channel = Service.CheckToken(txtToken.Text).Result;
             if (Channel != null)
             {
+                LogInfo("Token validated! Parses will be posted to the displayed channel/server.");
                 lblGuildName.Text = Channel.guild;
                 lblChannelName.Text = Channel.channel;
                 PluginSettings.SetSetting("Token", txtToken.Text);
@@ -134,9 +143,10 @@ namespace MognetPlugin.Control
             }
             else
             {
+                LogInfo("Invalid token. Please check it or re-create it and try again.");
                 lblGuildName.Text = "";
                 lblChannelName.Text = "";
-                txtToken.Text = "";
+                //txtToken.Text = "";
                 PluginSettings.SetSetting("Token", "");
                 PluginSettings.SetSetting("GuildName", "");
                 PluginSettings.SetSetting("ChannelName", "");
@@ -169,5 +179,4 @@ namespace MognetPlugin.Control
             return false;
         }
     }
-
 }
