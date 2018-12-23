@@ -1,32 +1,26 @@
 ﻿using Advanced_Combat_Tracker;
-
-using System.Windows.Forms;
-using System.Web.Script.Serialization;
-using System;
-using System.Net.Http;
-
 using MognetPlugin.Control;
-using MognetPlugin.Util;
 using MognetPlugin.Model;
 using MognetPlugin.Properties;
-using MognetPlugin.Http;
 using MognetPlugin.Service;
-using System.Text.RegularExpressions;
+using MognetPlugin.Util;
+using System;
+using System.Windows.Forms;
 
 namespace MognetPlugin
 {
     public class PluginMain : IActPluginV1
     {
-        TabPage TabPage;
-        Label PluginStatusLabel;
-        PluginControl PluginControl;
-        DiscordService Service;
+        private TabPage TabPage;
+        private Label PluginStatusLabel;
+        private PluginControl PluginControl;
+        private DiscordService Service;
 
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
             this.TabPage = pluginScreenSpace;
             this.PluginStatusLabel = pluginStatusText;
- 
+
             this.PluginStatusLabel.Text = "Mognet Plugin";
             this.TabPage.Text = "Mognet Plugin";
 
@@ -42,7 +36,7 @@ namespace MognetPlugin
             this.PluginControl.LogInfo("Plugin started.");
             if (PluginUtil.IsPluginEnabled())
             {
-                this.PluginControl.LogInfo("Waiting the next encounter...");
+                this.PluginControl.LogInfo("Waiting for the next encounter...");
             }
         }
 
@@ -51,7 +45,7 @@ namespace MognetPlugin
             ActGlobals.oFormActMain.OnCombatStart -= CombatStarted;
             ActGlobals.oFormActMain.OnCombatEnd -= CombatEnded;
         }
-        
+
         private void CombatStarted(bool isImport, CombatToggleEventArgs encounterInfo)
         {
             if (PluginUtil.IsPluginEnabled())
@@ -75,20 +69,21 @@ namespace MognetPlugin
                         if (Sent)
                         {
                             PluginControl.LogInfo("Parse sent to your Discord channel.");
-                            PluginControl.LogInfo("Waiting the next encounter...");
+                            PluginControl.LogInfo("Waiting for the next encounter...");
                         }
                         else
                         {
-                            PluginControl.LogInfo("Could not send the parse to your Discord channel. Check your token.");
+                            PluginControl.LogInfo("Could not send the parse to your Discord channel. Check your token and permissions.");
                         }
-                    } else
+                    }
+                    else
                     {
-                        PluginControl.LogInfo("Nothing to be sent. Waiting the next encounter...");
+                        PluginControl.LogInfo("Nothing to be sent. Waiting for the next encounter...");
                     }
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    PluginControl.LogInfo("Something went wrong. " + ex.Message);
+                    PluginControl.LogInfo("Something went wrong. Debug info:" + Environment.NewLine + e.ToString());
                 }
             }
         }

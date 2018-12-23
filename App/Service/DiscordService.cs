@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MognetPlugin.Service
 {
-    class DiscordService
+    internal class DiscordService
     {
-        PluginHttpClient Client;
+        private PluginHttpClient Client;
 
         public DiscordService()
         {

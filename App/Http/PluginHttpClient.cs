@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MognetPlugin.Http
 {
-    class PluginHttpClient
+    internal class PluginHttpClient
     {
         private string BaseURL = "https://mognet.herokuapp.com";
         private HttpClient Client;

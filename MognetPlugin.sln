@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MognetPlugin", "App\MognetPlugin.csproj", "{8630D238-8BB5-4219-9C29-B32D20F06F70}"
 EndProject
@@ -13,10 +13,13 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8630D238-8BB5-4219-9C29-B32D20F06F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8630D238-8BB5-4219-9C29-B32D20F06F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8630D238-8BB5-4219-9C29-B32D20F06F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8630D238-8BB5-4219-9C29-B32D20F06F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8630D238-8BB5-4219-9C29-B32D20F06F70}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8630D238-8BB5-4219-9C29-B32D20F06F70}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DB7E99F-59D3-4FE1-BCB3-A77FAFBCF25B}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,6 @@
 ﻿namespace MognetPlugin.Model
 {
-    class DiscordChannel
+    internal class DiscordChannel
     {
         public string guild { get; set; }
         public string channel { get; set; }
@@ -16,7 +16,5 @@
             this.guild = guild;
             this.channel = channel;
         }
-
-
     }
 }
