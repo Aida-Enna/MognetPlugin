@@ -49,6 +49,11 @@ namespace MognetPlugin.Control
             this.chlAttributes.SetItemChecked(13, PluginSettings.GetSetting<bool>("CritHealPerc"));
 
             this.cmbSort.Text = PluginSettings.GetSetting<string>("SortBy");
+
+            this.chkTimeEnabled.Checked = PluginSettings.GetSetting<bool>("TimeEnabled");
+            this.dtpStartTime.Value = DateTime.Parse(PluginSettings.GetSetting<string>("StartTime"));
+            this.dtpEndTime.Value = DateTime.Parse(PluginSettings.GetSetting<string>("EndTime"));
+
         }
 
         private void chlAttributes_ItemCheck(object sender, EventArgs e)
@@ -177,6 +182,33 @@ namespace MognetPlugin.Control
             }
 
             return false;
+        }
+
+        private void chkTimeEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            PluginSettings.SetSetting("TimeEnabled", chkEnabled.Checked);
+
+            if (this.chkTimeEnabled.Checked)
+            {
+                LogInfo("Time lock enabled. Parses will only be sent to discord between the specified times.");
+            }
+            else
+            {
+                LogInfo("Time lock disabled. Parses will be sent as usual.");
+            }
+
+            this.dtpStartTime.Enabled = chkTimeEnabled.Checked;
+            this.dtpEndTime.Enabled = chkTimeEnabled.Checked;
+        }
+
+        private void dtpStartTime_ValueChanged(object sender, EventArgs e)
+        {
+            PluginSettings.SetSetting("StartTime", dtpStartTime.Value.ToString());
+        }
+
+        private void dtpEndTime_ValueChanged(object sender, EventArgs e)
+        {
+            PluginSettings.SetSetting("EndTime", dtpEndTime.Value.ToString());
         }
     }
 }

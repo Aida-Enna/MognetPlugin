@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace MognetPlugin.Properties {
     
     
@@ -259,6 +261,51 @@ namespace MognetPlugin.Properties {
             }
             set {
                 this["SortBy"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8:00 PM")]
+        public string StartTime
+        {
+            get
+            {
+                return ((string)(this["StartTime"]));
+            }
+            set
+            {
+                this["StartTime"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10:00 PM")]
+        public string EndTime
+        {
+            get
+            {
+                return ((string)(this["EndTime"]));
+            }
+            set
+            {
+                this["EndTime"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TimeEnabled
+        {
+            get
+            {
+                return ((bool)(this["TimeEnabled"]));
+            }
+            set
+            {
+                this["TimeEnabled"] = value;
             }
         }
     }

@@ -57,6 +57,11 @@ namespace MognetPlugin.Control
             this.rchPluginLog = new System.Windows.Forms.RichTextBox();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.grpAttributes = new System.Windows.Forms.GroupBox();
+            this.lblEndTime = new System.Windows.Forms.Label();
+            this.lblStartTime = new System.Windows.Forms.Label();
+            this.dtpEndTime = new System.Windows.Forms.DateTimePicker();
+            this.dtpStartTime = new System.Windows.Forms.DateTimePicker();
+            this.chkTimeEnabled = new System.Windows.Forms.CheckBox();
             this.lblSort = new System.Windows.Forms.Label();
             this.cmbSort = new System.Windows.Forms.ComboBox();
             this.chlAttributes = new System.Windows.Forms.CheckedListBox();
@@ -187,6 +192,11 @@ namespace MognetPlugin.Control
             // 
             // grpAttributes
             // 
+            this.grpAttributes.Controls.Add(this.lblEndTime);
+            this.grpAttributes.Controls.Add(this.lblStartTime);
+            this.grpAttributes.Controls.Add(this.dtpEndTime);
+            this.grpAttributes.Controls.Add(this.dtpStartTime);
+            this.grpAttributes.Controls.Add(this.chkTimeEnabled);
             this.grpAttributes.Controls.Add(this.lblSort);
             this.grpAttributes.Controls.Add(this.cmbSort);
             this.grpAttributes.Controls.Add(this.chlAttributes);
@@ -197,9 +207,60 @@ namespace MognetPlugin.Control
             this.grpAttributes.TabStop = false;
             this.grpAttributes.Text = "Include Attributes";
             // 
+            // lblEndTime
+            // 
+            this.lblEndTime.Location = new System.Drawing.Point(3, 307);
+            this.lblEndTime.Name = "lblEndTime";
+            this.lblEndTime.Size = new System.Drawing.Size(70, 23);
+            this.lblEndTime.TabIndex = 12;
+            this.lblEndTime.Text = "End Time:";
+            this.lblEndTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblStartTime
+            // 
+            this.lblStartTime.Location = new System.Drawing.Point(3, 285);
+            this.lblStartTime.Name = "lblStartTime";
+            this.lblStartTime.Size = new System.Drawing.Size(70, 23);
+            this.lblStartTime.TabIndex = 11;
+            this.lblStartTime.Text = "Start Time:";
+            this.lblStartTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // dtpEndTime
+            // 
+            this.dtpEndTime.Enabled = false;
+            this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpEndTime.Location = new System.Drawing.Point(79, 310);
+            this.dtpEndTime.Name = "dtpEndTime";
+            this.dtpEndTime.ShowUpDown = true;
+            this.dtpEndTime.Size = new System.Drawing.Size(91, 20);
+            this.dtpEndTime.TabIndex = 10;
+            this.dtpEndTime.ValueChanged += new System.EventHandler(this.dtpEndTime_ValueChanged);
+            // 
+            // dtpStartTime
+            // 
+            this.dtpStartTime.Enabled = false;
+            this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpStartTime.Location = new System.Drawing.Point(79, 284);
+            this.dtpStartTime.Name = "dtpStartTime";
+            this.dtpStartTime.ShowUpDown = true;
+            this.dtpStartTime.Size = new System.Drawing.Size(91, 20);
+            this.dtpStartTime.TabIndex = 9;
+            this.dtpStartTime.ValueChanged += new System.EventHandler(this.dtpStartTime_ValueChanged);
+            // 
+            // chkTimeEnabled
+            // 
+            this.chkTimeEnabled.AutoSize = true;
+            this.chkTimeEnabled.Location = new System.Drawing.Point(6, 261);
+            this.chkTimeEnabled.Name = "chkTimeEnabled";
+            this.chkTimeEnabled.Size = new System.Drawing.Size(139, 17);
+            this.chkTimeEnabled.TabIndex = 8;
+            this.chkTimeEnabled.Text = "Only post logs between:";
+            this.chkTimeEnabled.UseVisualStyleBackColor = true;
+            this.chkTimeEnabled.CheckedChanged += new System.EventHandler(this.chkTimeEnabled_CheckedChanged);
+            // 
             // lblSort
             // 
-            this.lblSort.Location = new System.Drawing.Point(6, 340);
+            this.lblSort.Location = new System.Drawing.Point(3, 232);
             this.lblSort.Name = "lblSort";
             this.lblSort.Size = new System.Drawing.Size(45, 23);
             this.lblSort.TabIndex = 6;
@@ -210,17 +271,32 @@ namespace MognetPlugin.Control
             // 
             this.cmbSort.Items.AddRange(new object[] {
             ""});
-            this.cmbSort.Location = new System.Drawing.Point(57, 342);
+            this.cmbSort.Location = new System.Drawing.Point(54, 234);
             this.cmbSort.Name = "cmbSort";
-            this.cmbSort.Size = new System.Drawing.Size(113, 21);
+            this.cmbSort.Size = new System.Drawing.Size(116, 21);
             this.cmbSort.TabIndex = 7;
             // 
             // chlAttributes
             // 
             this.chlAttributes.CheckOnClick = true;
+            this.chlAttributes.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14"});
             this.chlAttributes.Location = new System.Drawing.Point(6, 16);
             this.chlAttributes.Name = "chlAttributes";
-            this.chlAttributes.Size = new System.Drawing.Size(164, 319);
+            this.chlAttributes.Size = new System.Drawing.Size(164, 214);
             this.chlAttributes.TabIndex = 1;
             // 
             // PluginControl
@@ -236,6 +312,7 @@ namespace MognetPlugin.Control
             this.grpOptions.PerformLayout();
             this.grpHttpLog.ResumeLayout(false);
             this.grpAttributes.ResumeLayout(false);
+            this.grpAttributes.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -296,5 +373,10 @@ namespace MognetPlugin.Control
         private Label lblChannelName;
         private Label lbDiscordChannel;
         private Label lblDiscordGuild;
+        private Label lblEndTime;
+        private Label lblStartTime;
+        private DateTimePicker dtpEndTime;
+        private DateTimePicker dtpStartTime;
+        private CheckBox chkTimeEnabled;
     }
 }
