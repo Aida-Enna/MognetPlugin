@@ -279,21 +279,6 @@ namespace MognetPlugin.Control
             // chlAttributes
             // 
             this.chlAttributes.CheckOnClick = true;
-            this.chlAttributes.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14"});
             this.chlAttributes.Location = new System.Drawing.Point(6, 16);
             this.chlAttributes.Name = "chlAttributes";
             this.chlAttributes.Size = new System.Drawing.Size(164, 214);
