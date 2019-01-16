@@ -58,8 +58,8 @@ namespace MognetPlugin
         {
             if (PluginUtil.IsPluginEnabled())
             {
-                //try
-                //{
+                try
+                {
                     Log Log = PluginUtil.ACTEncounterToModel(encounterInfo.encounter);
                     if (Log != null)
                     {
@@ -88,11 +88,11 @@ namespace MognetPlugin
                     {
                         PluginControl.LogInfo("Nothing to be sent. Waiting for the next encounter...");
                     }
-                //}
-                //catch (Exception e)
-                //{
-                //    PluginControl.LogInfo("Something went wrong. Debug info:" + Environment.NewLine + e.ToString());
-                //}
+                }
+                catch (Exception e)
+                {
+                    PluginControl.LogInfo("Something went wrong. Debug info:" + Environment.NewLine + e.ToString());
+                }
             }
         }
     }
