@@ -63,6 +63,14 @@ namespace MognetPlugin
                     Log Log = PluginUtil.ACTEncounterToModel(encounterInfo.encounter);
                     if (Log != null)
                     {
+
+                        if (PluginSettings.GetSetting<bool>("TimeEnabled") == true && PluginUtil.TimeBetween(DateTime.Now, DateTime.Parse(PluginSettings.GetSetting<string>("StartTime")).TimeOfDay, DateTime.Parse(PluginSettings.GetSetting<string>("EndTime")).TimeOfDay) == false)
+                        {
+                            PluginControl.LogInfo("Parse *not* sent to your Discord channel due to time lock rules.");
+                            PluginControl.LogInfo("Waiting for the next encounter...");
+                            return;
+                        }
+
                         string Json = PluginUtil.ToJson(Log);
                         bool Sent = Service.PostDiscord(Json, PluginSettings.GetSetting<string>("Token"));
 

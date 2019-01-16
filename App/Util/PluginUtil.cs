@@ -140,5 +140,16 @@ namespace MognetPlugin.Util
             Match m = r.Match(text);
             return m.Groups[0].ToString().Trim();
         }
+
+        public static bool TimeBetween(DateTime datetime, TimeSpan start, TimeSpan end)
+        {
+            // convert datetime to a TimeSpan
+            TimeSpan now = datetime.TimeOfDay;
+            // see if start comes before end
+            if (start < end)
+                return start <= now && now <= end;
+            // start is after end, so do the inverse comparison
+            return !(end < now && now < start);
+        }
     }
 }
