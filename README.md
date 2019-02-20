@@ -13,11 +13,11 @@ In order to make this plugin to work properly, you will need to have both below 
 * [Advanced Combat Tracker](http://advancedcombattracker.com/includes/page-download.php?id=56);
 * [Ravahn's FFXIV_ACT_Plugin](http://advancedcombattracker.com/includes/page-download.php?id=66);
 
-Also, be sure to download the latest version of the plugin on the [releases](https://github.com/castanhob/MognetPlugin/releases) page!
+Also, be sure to download the latest version of the plugin on the [releases](https://github.com/Aida-Enna/MognetPlugin/releases) page!
 
 Setup
 -----
-Check the [wiki](https://github.com/castanhob/MognetPlugin/wiki/Mognet-Setup-Guide).
+Check the [wiki](https://github.com/Aida-Enna/MognetPlugin/wiki/Mognet-Setup-Guide).
 
 Commands
 --------
@@ -29,11 +29,11 @@ Commands
 Contributing
 ------------
 
-1. [Fork it](https://github.com/castanhob/MognetPlugin/fork)
+1. [Fork it](https://github.com/Aida-Enna/MognetPlugin/fork)
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
 5. Create a new Pull Request
 
-You can also contribute pointing a bug into the [issues](https://github.com/castanhob/MognetPlugin/issues) section.
+You can also contribute pointing a bug into the [issues](https://github.com/Aida-Enna/MognetPlugin/issues) section.
 The server side code is private right now, but I'll make it public soon!
