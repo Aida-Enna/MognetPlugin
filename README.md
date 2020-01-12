@@ -4,14 +4,12 @@ A simple plugin for ACT [(Advanced Combat Tracker)](http://advancedcombattracker
 
 With a fairly simple setup, the purpose is to help the raiding scene of Final Fantasy XIV to have a tool, where one can post parses and share numbers between FC members. Also, help PS4 players to track their performances without having to ask party members to post their numbers manually everytime.
 
-You can also use this plugin as a base to send your parses to your own private server by creating a fork and changing the host to your own server.
-
 Requisites
 ----------
 In order to make this plugin to work properly, you will need to have both below installed and configured:
 
-* [Advanced Combat Tracker](http://advancedcombattracker.com/includes/page-download.php?id=56);
-* [Ravahn's FFXIV_ACT_Plugin](http://advancedcombattracker.com/includes/page-download.php?id=66);
+* [Advanced Combat Tracker](https://advancedcombattracker.com/download.php);
+* [Ravahn's FFXIV_ACT_Plugin](https://github.com/ravahn/FFXIV_ACT_Plugin);
 
 Also, be sure to download the latest version of the plugin on the [releases](https://github.com/Aida-Enna/MognetPlugin/releases) page!
 
